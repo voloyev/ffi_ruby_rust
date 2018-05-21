@@ -17,3 +17,14 @@ fib
 fac
              0.000009   0.000001   0.000010 (  0.000009)
 ```
+
+
+## usage
+
+`$cargo build --release`
+
+than
+
+`$ruby fib.rb 40 # pass any positive mumber default 20`
+
+*note* you have to install ruby to run this examples
