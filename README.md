@@ -33,6 +33,6 @@ fac_i
 
 than
 
-`$ruby fib.rb 40 # pass any positive mumber default 20`
+`$ruby test_file.rb 40 # pass any positive mumber default 20`
 
 *note* you have to install ruby to run this examples
