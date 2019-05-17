@@ -6,10 +6,20 @@ require 'benchmark'
 # fibonacci in with rust
 module WithRust
   extend FFI::Library
-  ffi_lib 'target/release/libfib.so'
+  so_extension = case RUBY_PLATFORM
+                 when /darwin/
+                   'dylib'
+                 when /cygwin|mswin|mingw|bccwin|wince|emx/
+                   'dll'
+                 else
+                   'so'
+                 end
+
+  ffi_lib "target/release/libfib.#{so_extension}"
   attach_function :fib, [:uint64], :uint64
   attach_function :fib_iter, [:uint64], :uint64
   attach_function :fac, [:uint64], :uint64
+  attach_function :fac_i, [:uint64], :uint64
 end
 
 # fibonacci in pure ruby
@@ -32,6 +42,16 @@ module JustRuby
     def fac(num)
       num < 1 ? 1 : num * fac(num - 1)
     end
+
+    def fac_i(num)
+      fac_iter(1, 1, num)
+    end
+
+    def fac_iter(product, counter, max_counter)
+      return product if counter > max_counter
+
+      fac_iter(product * counter, counter + 1, max_counter)
+    end
   end
 end
 
@@ -50,6 +70,10 @@ Benchmark.bm(10) do |x|
   x.report { WithRust.fac(number) }
   puts "\n"
 
+  puts 'fac_i'
+  x.report { WithRust.fac_i(number) }
+  puts "\n"
+
   puts 'just ruby'
   puts 'fib'
   x.report { JustRuby.fib(number) }
@@ -58,5 +82,8 @@ Benchmark.bm(10) do |x|
 
   puts 'fac'
   x.report { JustRuby.fac(number) }
+  puts "\n"
+  puts 'fac_i'
+  x.report { JustRuby.fac_i(number) }
   puts "\n"
 end

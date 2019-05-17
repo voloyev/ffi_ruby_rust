@@ -29,6 +29,19 @@ pub extern "C" fn fac(n: u64) -> u64 {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn fac_i(n: u64) -> u64 {
+    fac_iter(1, 1, n)
+}
+
+fn fac_iter(product: u64, counter: u64, max_counter: u64) -> u64 {
+    if counter > max_counter {
+        return product
+    }
+
+    fac_iter(product * counter, counter + 1, max_counter)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -53,5 +66,10 @@ mod tests {
     fn fac_test() {
         let fac_num = fac(5);
         assert_eq!(fac_num, 120);
+    }
+
+    #[test]
+    fn fac_i_test() {
+        assert_eq!(fac(6), fac_i(6))
     }
 }
