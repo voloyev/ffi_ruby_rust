@@ -1,3 +1,9 @@
+mod server_actix;
+use actix_web::middleware::Logger;
+use actix_web::{web, App, HttpServer};
+use env_logger;
+use server_actix::{greet, index};
+
 #[no_mangle]
 pub extern "C" fn fib(n: u64) -> u64 {
     if n < 3 {
@@ -34,9 +40,27 @@ pub extern "C" fn fac_i(n: u64) -> u64 {
     fac_iter(1, 1, n)
 }
 
+#[no_mangle]
+pub extern "C" fn server() {
+    std::env::set_var("RUST_LOG", "actix_web=info");
+    env_logger::init();
+    HttpServer::new(|| {
+        App::new()
+            .wrap(Logger::default())
+            .wrap(Logger::new("%a %{User-Agent}i"))
+            .route("/", web::get().to(greet))
+            .route("/hello/{name}", web::get().to(greet))
+            .route("/index", web::get().to(index))
+    })
+    .bind("127.0.0.1:8000")
+    .expect("Can not bind to port 8000")
+    .run()
+    .unwrap();
+}
+
 fn fac_iter(product: u64, counter: u64, max_counter: u64) -> u64 {
     if counter > max_counter {
-        return product
+        return product;
     }
 
     fac_iter(product * counter, counter + 1, max_counter)

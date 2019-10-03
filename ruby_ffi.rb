@@ -4,7 +4,6 @@ require 'rspec/autorun'
 
 number = 30
 
-
 module WithRust
   extend FFI::Library
   so_extension = case RUBY_PLATFORM
