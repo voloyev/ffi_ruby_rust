@@ -11,7 +11,7 @@ GEM
     kramdown (1.17.0)
     method_source (0.9.2)
     mini_portile2 (2.4.0)
-    nokogiri (1.10.3)
+    nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     parallel (1.17.0)
     parser (2.6.3.0)
@@ -69,6 +69,7 @@ PLATFORMS
 
 DEPENDENCIES
   fastri
+  nokogiri (>= 1.10.4)
   pry
   pry-doc
   rcodetools
