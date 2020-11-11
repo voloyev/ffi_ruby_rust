@@ -29,6 +29,6 @@ rust_fib, rust_fac = lib.fib, lib.fac
 
 
 def test_implementations():
-    python = py_fac(15)
-    rust = rust_fac(15)
+    python = py_fac(40)
+    rust = rust_fac(40)
     assert rust == python

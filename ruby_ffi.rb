@@ -52,19 +52,28 @@ module JustRuby
 
       fac_iter(product * counter, counter + 1, max_counter)
     end
+
+    def fac_reduce(num)
+      (1..num).reduce(&:*)
+    end
   end
 end
 
 RSpec.describe do
-  context 'check equality between ruby implementations' do
+  context 'check equality between ruby implementations of fibonacci' do
     it { expect(JustRuby.fib(number)).to eq(JustRuby.fib_iter(number)) }
+  end
+  context 'check equality between ruby implementations of factorial' do
     it { expect(JustRuby.fac(number)).to eq(JustRuby.fac_i(number)) }
+    it { expect(JustRuby.fac_reduce(number)).to eq(JustRuby.fac_i(number)) }
   end
 
-  context 'check equality between rust and ruby implementations' do
+  context 'check equality between rust and ruby implementations of factorial' do
     it { expect(WithRust.fac(number)).to eq(JustRuby.fac(number)) }
     it { expect(WithRust.fac_i(number)).to eq(JustRuby.fac_i(number)) }
+  end
 
+  context 'check equality between rust and ruby implementations of fibonacci' do
     it { expect(WithRust.fib(number)).to eq(JustRuby.fib(number)) }
     it { expect(WithRust.fib_iter(number)).to eq(JustRuby.fib_iter(number)) }
   end
