@@ -9,4 +9,4 @@ gem 'rspec'
 gem 'pry'
 gem 'pry-doc'
 gem 'rubocop'
-gem "nokogiri", ">= 1.10.4"
+gem 'nokogiri', '>= 1.10.4'
