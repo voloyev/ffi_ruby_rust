@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'rcodetools'
+gem 'kramdown', '>=2.3.0'
 gem 'solargraph'
 gem 'fastri'
 gem 'rspec'
