@@ -31,8 +31,14 @@ fac_i
 
 `$cargo build --release`
 
-than
+then
 
-`$ruby test_file.rb 40 # pass any positive mumber default 20`
+### RUBY ###
+
+`$ruby benchmark_file.rb 40 # pass any positive mumber default 20`
 
 *note* you have to install ruby to run this examples
+
+### Python ###
+
+``
